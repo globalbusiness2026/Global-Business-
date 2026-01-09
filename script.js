@@ -74,144 +74,6 @@ dots.forEach((dot, index) => {
 // Auto slide
 setInterval(nextSlide, 5000);
 
-// EmailJS Configuration
-(function() {
-    // Initialize EmailJS with your public key
-    emailjs.init("user_public_key_here"); // You'll need to sign up at https://www.emailjs.com and get your own key
-    
-    // For now, we'll use a fallback method to send email via FormSubmit
-})();
-
-// Form submission with email functionality
-document.getElementById('demoForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value || 'Not provided';
-    const plan = document.getElementById('plan').value;
-    const requirements = document.getElementById('requirements').value || 'No specific requirements';
-    
-    // Get plan text based on value
-    const planText = {
-        'starter': 'Starter Plan (₹1,999)',
-        'business': 'Business Plan (₹4,999)',
-        'enterprise': 'Enterprise Plan (₹9,999)',
-        'custom': 'Custom Solution'
-    }[plan] || plan;
-    
-    // Show loading state
-    const submitBtn = this.querySelector('.btn-submit');
-    const originalBtnText = submitBtn.textContent;
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-    
-    try {
-        // Method 1: Try EmailJS (requires setup)
-        // await sendEmailViaEmailJS(name, phone, email, planText, requirements);
-        
-        // Method 2: Use FormSubmit.co (free, no setup needed)
-        await sendEmailViaFormSubmit(name, phone, email, planText, requirements);
-        
-        // Show success modal
-        showSuccessModal(name, phone);
-        
-        // Reset form
-        this.reset();
-        
-    } catch (error) {
-        console.error('Error sending email:', error);
-        
-        // Fallback: Show success message even if email fails
-        showSuccessModal(name, phone);
-        this.reset();
-    } finally {
-        // Restore button
-        submitBtn.textContent = originalBtnText;
-        submitBtn.disabled = false;
-    }
-});
-
-// Send email using FormSubmit.co (FREE service)
-async function sendEmailViaFormSubmit(name, phone, email, plan, requirements) {
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('phone', phone);
-    formData.append('email', email);
-    formData.append('plan', plan);
-    formData.append('requirements', requirements);
-    formData.append('_subject', `New MLM Software Demo Request - ${name}`);
-    formData.append('_template', 'table');
-    
-    // Send to FormSubmit
-    const response = await fetch('https://formsubmit.co/ajax/gbusiness051@gmail.com', {
-        method: 'POST',
-        body: formData
-    });
-    
-    if (!response.ok) {
-        throw new Error('Failed to send email');
-    }
-    
-    return response.json();
-}
-
-// Send email using EmailJS (requires setup)
-async function sendEmailViaEmailJS(name, phone, email, plan, requirements) {
-    const templateParams = {
-        to_email: 'gbusiness051@gmail.com',
-        from_name: name,
-        from_phone: phone,
-        from_email: email,
-        plan: plan,
-        requirements: requirements,
-        date: new Date().toLocaleDateString('en-IN')
-    };
-    
-    return emailjs.send(
-        'service_id', // Replace with your EmailJS service ID
-        'template_id', // Replace with your EmailJS template ID
-        templateParams
-    );
-}
-
-// Show success modal
-function showSuccessModal(name, phone) {
-    const modal = document.getElementById('successModal');
-    const modalContent = modal.querySelector('.modal-content p');
-    
-    // Update modal message
-    modalContent.innerHTML = `
-        Thank you <strong>${name}</strong> for your interest in Global Business MLM Software.<br><br>
-        We have received your request for the demo and will contact you at <strong>${phone}</strong> within 30 minutes.<br><br>
-        A confirmation email has been sent to <strong>gbusiness051@gmail.com</strong>.
-    `;
-    
-    // Show modal
-    modal.style.display = 'flex';
-    
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Close modal functionality
-document.querySelector('.close-modal').addEventListener('click', function() {
-    document.getElementById('successModal').style.display = 'none';
-});
-
-document.getElementById('closeModalBtn').addEventListener('click', function() {
-    document.getElementById('successModal').style.display = 'none';
-});
-
-// Close modal when clicking outside
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('successModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -232,7 +94,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Animate elements on scroll
 function animateOnScroll() {
-    const elements = document.querySelectorAll('.feature-card, .pricing-card, .contact-container > div');
+    const elements = document.querySelectorAll('.feature-card, .pricing-card, .contact-card');
     
     elements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
@@ -246,14 +108,14 @@ function animateOnScroll() {
 }
 
 // Set initial state for animation
-document.querySelectorAll('.feature-card, .pricing-card, .contact-container > div').forEach(element => {
+document.querySelectorAll('.feature-card, .pricing-card, .contact-card').forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(30px)';
     element.style.transition = 'opacity 0.5s, transform 0.5s';
 });
 
 // Call to action button animation
-const callButtons = document.querySelectorAll('.btn-primary, .btn-call-now, .btn-pricing, .floating-call-btn');
+const callButtons = document.querySelectorAll('.btn-primary, .btn-pricing, .floating-call-btn, .contact-btn, .direct-call-btn, .btn-call-now, .cta-call');
 callButtons.forEach(button => {
     button.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-3px)';
@@ -263,6 +125,15 @@ callButtons.forEach(button => {
         this.style.transform = 'translateY(0)';
     });
 });
+
+// Phone number click tracking
+function trackPhoneCall(phoneNumber) {
+    // In a real application, you would send this to analytics
+    console.log('Phone call initiated to:', phoneNumber);
+    
+    // You can add Google Analytics or other tracking here
+    // Example: gtag('event', 'phone_call', { 'phone_number': phoneNumber });
+}
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -275,12 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Trigger once on load
     animateOnScroll();
     
-    // Phone number formatting and click tracking
+    // Phone number click tracking
     const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
     phoneLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // In a real application, you would track this call conversion
-            console.log('Call initiated to:', this.getAttribute('href'));
+            const phoneNumber = this.getAttribute('href').replace('tel:', '');
+            trackPhoneCall(phoneNumber);
             
             // Animate the button
             this.style.transform = 'scale(0.95)';
@@ -292,16 +163,122 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add a subtle pulse animation to the main call button
     const mainCallBtn = document.querySelector('.floating-call-btn');
-    setInterval(() => {
-        mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.7)';
-        setTimeout(() => {
-            mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.5)';
-        }, 1000);
-    }, 3000);
-    
-    // Set current year in footer if needed
-    const yearSpan = document.querySelector('.current-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
+    if (mainCallBtn) {
+        setInterval(() => {
+            mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.7)';
+            setTimeout(() => {
+                mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.5)';
+            }, 1000);
+        }, 3000);
     }
+    
+    // Set current year in footer
+    const currentYear = new Date().getFullYear();
+    const yearElements = document.querySelectorAll('.current-year');
+    yearElements.forEach(element => {
+        element.textContent = currentYear;
+    });
+    
+    // Add current year to footer bottom if not present
+    const footerBottom = document.querySelector('.footer-bottom');
+    if (footerBottom && !footerBottom.querySelector('.current-year')) {
+        const firstParagraph = footerBottom.querySelector('p:first-child');
+        if (firstParagraph) {
+            firstParagraph.innerHTML = firstParagraph.innerHTML.replace('2026', currentYear);
+        }
+    }
+});
+
+// SEO enhancement - Add structured data
+function addStructuredData() {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Global Business MLM Software",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "1999",
+            "priceCurrency": "INR"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150"
+        },
+        "operatingSystem": "Web-based",
+        "description": "Professional MLM Software under ₹1999 with advanced features for network marketing businesses.",
+        "url": window.location.href
+    });
+    document.head.appendChild(script);
+}
+
+// Call structured data function
+addStructuredData();
+
+// Enhance mobile experience
+function enhanceMobileExperience() {
+    if ('ontouchstart' in window) {
+        // Add touch-specific enhancements
+        document.body.classList.add('touch-device');
+        
+        // Increase touch targets for mobile
+        const buttons = document.querySelectorAll('a, button');
+        buttons.forEach(btn => {
+            if (btn.offsetHeight < 44 || btn.offsetWidth < 44) {
+                btn.style.minHeight = '44px';
+                btn.style.minWidth = '44px';
+                btn.style.display = 'inline-flex';
+                btn.style.alignItems = 'center';
+                btn.style.justifyContent = 'center';
+            }
+        });
+    }
+}
+
+// Call mobile enhancement
+enhanceMobileExperience();
+
+// Performance optimization - Lazy load images
+function lazyLoadImages() {
+    const images = document.querySelectorAll('img');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                observer.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => {
+        if (img.dataset.src) {
+            imageObserver.observe(img);
+        }
+    });
+}
+
+// Call lazy loading if needed
+// lazyLoadImages(); // Uncomment if you want to implement lazy loading
+
+// Add loading state for buttons
+document.querySelectorAll('.btn-pricing, .contact-btn, .direct-call-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        // Only for buttons that might have loading states
+        if (this.classList.contains('has-loader')) {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            this.disabled = true;
+            
+            // Reset after 3 seconds (simulate processing)
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 3000);
+        }
+    });
 });
