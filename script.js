@@ -94,7 +94,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Animate elements on scroll
 function animateOnScroll() {
-    const elements = document.querySelectorAll('.feature-card, .pricing-card, .contact-card');
+    const elements = document.querySelectorAll('.feature-card, .pricing-card, .contact-card, .location-card');
     
     elements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
@@ -108,14 +108,14 @@ function animateOnScroll() {
 }
 
 // Set initial state for animation
-document.querySelectorAll('.feature-card, .pricing-card, .contact-card').forEach(element => {
+document.querySelectorAll('.feature-card, .pricing-card, .contact-card, .location-card').forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(30px)';
     element.style.transition = 'opacity 0.5s, transform 0.5s';
 });
 
 // Call to action button animation
-const callButtons = document.querySelectorAll('.btn-primary, .btn-pricing, .floating-call-btn, .contact-btn, .direct-call-btn, .btn-call-now, .cta-call');
+const callButtons = document.querySelectorAll('.btn-primary, .btn-pricing, .floating-call-btn, .contact-btn, .direct-call-btn, .btn-location, .cta-call');
 callButtons.forEach(button => {
     button.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-3px)';
@@ -131,8 +131,11 @@ function trackPhoneCall(phoneNumber) {
     // In a real application, you would send this to analytics
     console.log('Phone call initiated to:', phoneNumber);
     
+    // Track as Mumbai/Navi Mumbai call
+    console.log('Call from Mumbai/Navi Mumbai area');
+    
     // You can add Google Analytics or other tracking here
-    // Example: gtag('event', 'phone_call', { 'phone_number': phoneNumber });
+    // Example: gtag('event', 'phone_call', { 'phone_number': phoneNumber, 'location': 'Mumbai' });
 }
 
 // Initialize when page loads
@@ -187,21 +190,39 @@ document.addEventListener('DOMContentLoaded', function() {
             firstParagraph.innerHTML = firstParagraph.innerHTML.replace('2026', currentYear);
         }
     }
+    
+    // Add Mumbai/Vashi location specific features
+    console.log('Global Business MLM Software - Vashi, Navi Mumbai');
+    console.log('Serving: Mumbai, Thane, Pune, Nagpur, Aurangabad, Nashik, Kolhapur, Solapur');
 });
 
-// SEO enhancement - Add structured data
+// SEO enhancement - Add structured data for Mumbai location
 function addStructuredData() {
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.textContent = JSON.stringify({
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Global Business MLM Software",
+        "name": "Global Business MLM Software - Vashi, Navi Mumbai",
         "applicationCategory": "BusinessApplication",
         "offers": {
             "@type": "Offer",
-            "price": "1999",
-            "priceCurrency": "INR"
+            "price": "2499",
+            "priceCurrency": "INR",
+            "areaServed": {
+                "@type": "State",
+                "name": "Maharashtra"
+            }
+        },
+        "areaServed": {
+            "@type": "City",
+            "name": ["Mumbai", "Navi Mumbai", "Thane", "Pune", "Nagpur", "Aurangabad"]
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Vashi",
+            "addressRegion": "Maharashtra",
+            "addressCountry": "IN"
         },
         "aggregateRating": {
             "@type": "AggregateRating",
@@ -209,7 +230,7 @@ function addStructuredData() {
             "ratingCount": "150"
         },
         "operatingSystem": "Web-based",
-        "description": "Professional MLM Software under ₹1999 with advanced features for network marketing businesses.",
+        "description": "Professional MLM Software in Vashi, Navi Mumbai. Best MLM software solutions for Mumbai, Thane, Pune and entire Maharashtra.",
         "url": window.location.href
     });
     document.head.appendChild(script);
@@ -217,6 +238,30 @@ function addStructuredData() {
 
 // Call structured data function
 addStructuredData();
+
+// Mumbai/Vashi location tracking
+function trackLocationInterest() {
+    // Track interest based on keywords
+    const keywords = ['mumbai', 'navi mumbai', 'vashi', 'maharashtra', 'thane', 'pune'];
+    const pageText = document.body.innerText.toLowerCase();
+    
+    let locationScore = 0;
+    keywords.forEach(keyword => {
+        const regex = new RegExp(keyword, 'gi');
+        const matches = pageText.match(regex);
+        if (matches) {
+            locationScore += matches.length;
+        }
+    });
+    
+    console.log(`Location SEO Score for Mumbai/Navi Mumbai: ${locationScore}`);
+    
+    // Could send this to analytics
+    // gtag('event', 'location_interest', { 'location': 'Mumbai', 'score': locationScore });
+}
+
+// Call location tracking
+trackLocationInterest();
 
 // Enhance mobile experience
 function enhanceMobileExperience() {
@@ -241,32 +286,8 @@ function enhanceMobileExperience() {
 // Call mobile enhancement
 enhanceMobileExperience();
 
-// Performance optimization - Lazy load images
-function lazyLoadImages() {
-    const images = document.querySelectorAll('img');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.add('loaded');
-                observer.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => {
-        if (img.dataset.src) {
-            imageObserver.observe(img);
-        }
-    });
-}
-
-// Call lazy loading if needed
-// lazyLoadImages(); // Uncomment if you want to implement lazy loading
-
 // Add loading state for buttons
-document.querySelectorAll('.btn-pricing, .contact-btn, .direct-call-btn').forEach(button => {
+document.querySelectorAll('.btn-pricing, .contact-btn, .direct-call-btn, .btn-location').forEach(button => {
     button.addEventListener('click', function(e) {
         // Only for buttons that might have loading states
         if (this.classList.contains('has-loader')) {
