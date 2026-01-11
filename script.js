@@ -1,7 +1,66 @@
+// Enhanced Mobile Menu Functionality
+function initMobileMenu() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+    
+    // Create overlay for mobile menu
+    const overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    document.body.appendChild(overlay);
+    
+    // Create close button for mobile menu
+    const closeButton = document.createElement('button');
+    closeButton.className = 'menu-close';
+    closeButton.innerHTML = '<i class="fas fa-times"></i>';
+    closeButton.setAttribute('aria-label', 'Close menu');
+    navLinks.appendChild(closeButton);
+    
+    // Toggle mobile menu
+    function toggleMenu() {
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
+        body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        
+        // Change menu icon
+        const icon = menuToggle.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    }
+    
+    // Event listeners
+    menuToggle.addEventListener('click', toggleMenu);
+    closeButton.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking on links
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+    
+    // Close menu on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            toggleMenu();
+        }
+    });
+}
+
 // Particle animation for background
 function createParticles() {
     const container = document.getElementById('particles');
-    const particleCount = 50;
+    if (!container) return;
+    
+    const particleCount = window.innerWidth < 768 ? 25 : 50;
     
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
@@ -29,17 +88,23 @@ function createParticles() {
         particle.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
         particle.style.borderRadius = '50%';
         particle.style.animation = `float ${duration}s infinite linear ${delay}s`;
+        particle.style.pointerEvents = 'none';
         
         container.appendChild(particle);
     }
 }
 
-// Image slider functionality
+// Image slider functionality - Mobile Optimized
 let currentSlide = 0;
+let slideInterval;
 const slides = document.querySelectorAll('.image-slider img');
 const dots = document.querySelectorAll('.slider-dot');
 
 function showSlide(index) {
+    // Validate index
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    
     // Hide all slides
     slides.forEach(slide => {
         slide.classList.remove('active');
@@ -52,109 +117,190 @@ function showSlide(index) {
     
     // Show current slide
     slides[index].classList.add('active');
-    dots[index].classList.add('active');
+    if (dots[index]) {
+        dots[index].classList.add('active');
+    }
     currentSlide = index;
 }
 
 function nextSlide() {
-    let nextIndex = currentSlide + 1;
-    if (nextIndex >= slides.length) {
-        nextIndex = 0;
+    showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+function startAutoSlide() {
+    // Only auto-slide on larger screens
+    if (window.innerWidth > 768) {
+        slideInterval = setInterval(nextSlide, 5000);
     }
-    showSlide(nextIndex);
+}
+
+function stopAutoSlide() {
+    clearInterval(slideInterval);
 }
 
 // Initialize slider dots
 dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
+        stopAutoSlide();
         showSlide(index);
+        startAutoSlide();
     });
 });
 
-// Auto slide
-setInterval(nextSlide, 5000);
+// Touch swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+function handleTouchStart(e) {
+    touchStartX = e.changedTouches[0].screenX;
+}
+
+function handleTouchEnd(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    
+    if (touchStartX - touchEndX > swipeThreshold) {
+        // Swipe left - next slide
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+    }
+    
+    if (touchEndX - touchStartX > swipeThreshold) {
+        // Swipe right - previous slide
+        stopAutoSlide();
+        prevSlide();
+        startAutoSlide();
+    }
+}
 
 // Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Animate elements on scroll
-function animateOnScroll() {
-    const elements = document.querySelectorAll('.feature-card, .pricing-card, .contact-card, .location-card');
-    
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        
-        if (elementTop < windowHeight - 100) {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        }
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Close mobile menu if open
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks && navLinks.classList.contains('active')) {
+                    document.querySelector('.menu-toggle').click();
+                }
+                
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
 }
 
-// Set initial state for animation
-document.querySelectorAll('.feature-card, .pricing-card, .contact-card, .location-card').forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(30px)';
-    element.style.transition = 'opacity 0.5s, transform 0.5s';
-});
-
-// Call to action button animation
-const callButtons = document.querySelectorAll('.btn-primary, .btn-pricing, .floating-call-btn, .contact-btn, .direct-call-btn, .btn-location, .cta-call');
-callButtons.forEach(button => {
-    button.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px)';
+// Animate elements on scroll with Intersection Observer
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('.feature-card, .pricing-card, .contact-card, .location-card');
+    
+    // Set initial state for animation
+    elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     });
     
-    button.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
+    // Use Intersection Observer for better performance
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     });
-});
+    
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+}
 
 // Phone number click tracking
-function trackPhoneCall(phoneNumber) {
+function trackPhoneCall(phoneNumber, location = 'Mumbai') {
     // In a real application, you would send this to analytics
-    console.log('Phone call initiated to:', phoneNumber);
+    console.log(`Phone call initiated to: ${phoneNumber} from ${location}`);
+    
+    // Track call event
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'phone_call', {
+            'phone_number': phoneNumber,
+            'location': location,
+            'event_category': 'Contact',
+            'event_label': 'Phone Call'
+        });
+    }
     
     // Track as Mumbai/Navi Mumbai call
-    console.log('Call from Mumbai/Navi Mumbai area');
-    
-    // You can add Google Analytics or other tracking here
-    // Example: gtag('event', 'phone_call', { 'phone_number': phoneNumber, 'location': 'Mumbai' });
+    const isMumbai = location.includes('Mumbai') || location.includes('Maharashtra');
+    console.log(`Call from Mumbai/Navi Mumbai area: ${isMumbai}`);
 }
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize mobile menu
+    initMobileMenu();
+    
+    // Create particles
     createParticles();
+    
+    // Initialize slider
     showSlide(0);
+    startAutoSlide();
     
-    // Start scroll animation check
-    window.addEventListener('scroll', animateOnScroll);
+    // Initialize smooth scroll
+    initSmoothScroll();
     
-    // Trigger once on load
-    animateOnScroll();
+    // Initialize scroll animations
+    initScrollAnimations();
+    
+    // Add touch events for slider on mobile
+    const slider = document.querySelector('.image-slider');
+    if (slider) {
+        slider.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slider.addEventListener('touchend', handleTouchEnd, { passive: true });
+    }
+    
+    // Pause auto-slide on hover (desktop only)
+    if (window.innerWidth > 768) {
+        slider?.addEventListener('mouseenter', stopAutoSlide);
+        slider?.addEventListener('mouseleave', startAutoSlide);
+    }
     
     // Phone number click tracking
     const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
     phoneLinks.forEach(link => {
         link.addEventListener('click', function() {
             const phoneNumber = this.getAttribute('href').replace('tel:', '');
-            trackPhoneCall(phoneNumber);
+            const location = this.closest('.location-tag')?.textContent || 
+                           this.closest('[class*="mumbai"], [class*="Mumbai"]')?.textContent || 
+                           'Mumbai/Navi Mumbai';
+            trackPhoneCall(phoneNumber, location);
             
             // Animate the button
             this.style.transform = 'scale(0.95)';
@@ -164,15 +310,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add a subtle pulse animation to the main call button
+    // Add pulse animation to the main call button
     const mainCallBtn = document.querySelector('.floating-call-btn');
     if (mainCallBtn) {
         setInterval(() => {
-            mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.7)';
-            setTimeout(() => {
-                mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.5)';
-            }, 1000);
-        }, 3000);
+            if (!mainCallBtn.matches(':hover')) {
+                mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.7)';
+                setTimeout(() => {
+                    mainCallBtn.style.boxShadow = '0 5px 20px rgba(255, 157, 26, 0.5)';
+                }, 1000);
+            }
+        }, 5000);
     }
     
     // Set current year in footer
@@ -182,67 +330,30 @@ document.addEventListener('DOMContentLoaded', function() {
         element.textContent = currentYear;
     });
     
-    // Add current year to footer bottom if not present
-    const footerBottom = document.querySelector('.footer-bottom');
-    if (footerBottom && !footerBottom.querySelector('.current-year')) {
-        const firstParagraph = footerBottom.querySelector('p:first-child');
-        if (firstParagraph) {
-            firstParagraph.innerHTML = firstParagraph.innerHTML.replace('2026', currentYear);
-        }
+    // Update copyright year in footer
+    const copyrightText = document.querySelector('.footer-bottom p:first-child');
+    if (copyrightText) {
+        copyrightText.innerHTML = copyrightText.innerHTML.replace('2026', currentYear);
     }
     
-    // Add Mumbai/Vashi location specific features
-    console.log('Global Business MLM Software - Vashi, Navi Mumbai');
-    console.log('Serving: Mumbai, Thane, Pune, Nagpur, Aurangabad, Nashik, Kolhapur, Solapur');
+    // Add structured data
+    addStructuredData();
+    
+    // Track location interest
+    trackLocationInterest();
+    
+    // Enhance mobile experience
+    enhanceMobileExperience();
+    
+    // Console log for SEO
+    console.log('Global Business MLM Software - Best in Vashi, Navi Mumbai, Maharashtra, India');
+    console.log('Serving: Mumbai, Navi Mumbai, Thane, Pune, Nagpur, Delhi, Bangalore, Hyderabad, Chennai, Kolkata & All India');
+    console.log('Contact: +91 86060 72342 | Vashi, Navi Mumbai');
 });
 
-// SEO enhancement - Add structured data for Mumbai location
-function addStructuredData() {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Global Business MLM Software - Vashi, Navi Mumbai",
-        "applicationCategory": "BusinessApplication",
-        "offers": {
-            "@type": "Offer",
-            "price": "1999",
-            "priceCurrency": "INR",
-            "areaServed": {
-                "@type": "State",
-                "name": "Maharashtra"
-            }
-        },
-        "areaServed": {
-            "@type": "City",
-            "name": ["Mumbai", "Navi Mumbai", "Thane", "Pune", "Nagpur", "Aurangabad"]
-        },
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Vashi",
-            "addressRegion": "Maharashtra",
-            "addressCountry": "IN"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "150"
-        },
-        "operatingSystem": "Web-based",
-        "description": "Professional MLM Software in Vashi, Navi Mumbai. Best MLM software solutions for Mumbai, Thane, Pune and entire Maharashtra.",
-        "url": window.location.href
-    });
-    document.head.appendChild(script);
-}
-
-// Call structured data function
-addStructuredData();
-
-// Mumbai/Vashi location tracking
+// Mumbai/Vashi location tracking for SEO
 function trackLocationInterest() {
-    // Track interest based on keywords
-    const keywords = ['mumbai', 'navi mumbai', 'vashi', 'maharashtra', 'thane', 'pune'];
+    const keywords = ['mumbai', 'navi mumbai', 'vashi', 'maharashtra', 'india', 'best', 'software', 'mlm'];
     const pageText = document.body.innerText.toLowerCase();
     
     let locationScore = 0;
@@ -254,48 +365,80 @@ function trackLocationInterest() {
         }
     });
     
-    console.log(`Location SEO Score for Mumbai/Navi Mumbai: ${locationScore}`);
+    console.log(`Location SEO Score: ${locationScore}`);
+    console.log(`Keywords: ${keywords.join(', ')}`);
     
-    // Could send this to analytics
-    // gtag('event', 'location_interest', { 'location': 'Mumbai', 'score': locationScore });
+    // Send to analytics if available
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'location_interest', {
+            'location': 'Mumbai/Navi Mumbai',
+            'score': locationScore,
+            'keywords': keywords.join(',')
+        });
+    }
 }
-
-// Call location tracking
-trackLocationInterest();
 
 // Enhance mobile experience
 function enhanceMobileExperience() {
+    // Add touch-specific enhancements
     if ('ontouchstart' in window) {
-        // Add touch-specific enhancements
         document.body.classList.add('touch-device');
         
         // Increase touch targets for mobile
         const buttons = document.querySelectorAll('a, button');
         buttons.forEach(btn => {
-            if (btn.offsetHeight < 44 || btn.offsetWidth < 44) {
+            const style = window.getComputedStyle(btn);
+            const height = parseInt(style.height);
+            const width = parseInt(style.width);
+            
+            if (height < 44 || width < 44) {
                 btn.style.minHeight = '44px';
                 btn.style.minWidth = '44px';
                 btn.style.display = 'inline-flex';
                 btn.style.alignItems = 'center';
                 btn.style.justifyContent = 'center';
+                btn.style.padding = '10px 15px';
             }
         });
+        
+        // Prevent zoom on double-tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     }
 }
 
-// Call mobile enhancement
-enhanceMobileExperience();
+// Handle window resize
+let resizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+        // Reinitialize auto-slide based on screen size
+        stopAutoSlide();
+        startAutoSlide();
+        
+        // Adjust particle count on resize
+        const container = document.getElementById('particles');
+        if (container) {
+            container.innerHTML = '';
+            createParticles();
+        }
+    }, 250);
+});
 
 // Add loading state for buttons
 document.querySelectorAll('.btn-pricing, .contact-btn, .direct-call-btn, .btn-location').forEach(button => {
     button.addEventListener('click', function(e) {
-        // Only for buttons that might have loading states
         if (this.classList.contains('has-loader')) {
             const originalText = this.innerHTML;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             this.disabled = true;
             
-            // Reset after 3 seconds (simulate processing)
             setTimeout(() => {
                 this.innerHTML = originalText;
                 this.disabled = false;
@@ -304,3 +447,29 @@ document.querySelectorAll('.btn-pricing, .contact-btn, .direct-call-btn, .btn-lo
     });
 });
 
+// Performance optimization
+window.addEventListener('load', function() {
+    // Lazy load images
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+        }
+    });
+    
+    // Remove loading class from body
+    document.body.classList.add('loaded');
+});
+
+// Add page visibility detection for auto-slide
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        stopAutoSlide();
+    } else {
+        startAutoSlide();
+    }
+});
