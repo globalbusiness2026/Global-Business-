@@ -207,7 +207,7 @@ function addStructuredData() {
         "applicationCategory": "BusinessApplication",
         "offers": {
             "@type": "Offer",
-            "price": "2499",
+            "price": "1999",
             "priceCurrency": "INR",
             "areaServed": {
                 "@type": "State",
@@ -303,3 +303,4 @@ document.querySelectorAll('.btn-pricing, .contact-btn, .direct-call-btn, .btn-lo
         }
     });
 });
+
