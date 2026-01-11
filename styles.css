@@ -365,6 +365,91 @@ header {
     transform: scale(1.2);
 }
 
+/* Location Section */
+.location {
+    padding: 80px 5%;
+    background: rgba(255, 255, 255, 0.97);
+    position: relative;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.location-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    text-align: center;
+    border-top: 4px solid #1e3799;
+}
+
+.location-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.location-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #1e3799, #4a69bd);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+}
+
+.location-card h3 {
+    font-size: 1.5rem;
+    color: #0c2461;
+    margin-bottom: 15px;
+}
+
+.location-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.location-cta {
+    background: linear-gradient(135deg, #0c2461, #1e3799);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.location-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.btn-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #ffdd59, #ff9f1a);
+    color: #0c2461;
+    padding: 15px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-location:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 157, 26, 0.4);
+}
+
 /* Features Section */
 .features {
     padding: 100px 5%;
@@ -498,6 +583,16 @@ header {
     margin-bottom: 15px;
 }
 
+.location-tag {
+    color: #4a69bd;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
 .price {
     display: flex;
     align-items: baseline;
@@ -571,9 +666,13 @@ header {
 .pricing-note p {
     font-size: 1.1rem;
     color: #0c2461;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-/* Contact Section (Simplified - Without Form) */
+/* Contact Section */
 .contact {
     padding: 100px 5%;
     background: white;
@@ -648,41 +747,56 @@ header {
     transform: translateY(-3px);
 }
 
-.social-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.social-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #f0f2f5;
-    color: #333;
-    padding: 12px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-.social-btn:hover {
-    background: #e4e6e9;
-    transform: translateY(-3px);
-}
-
-.social-btn i {
-    font-size: 1.2rem;
-}
-
 .contact-note {
     font-size: 0.9rem;
     color: #777;
     font-style: italic;
     margin-top: 10px;
+}
+
+/* Service Areas */
+.service-areas {
+    background: #f8f9ff;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 60px;
+}
+
+.service-areas h3 {
+    font-size: 1.8rem;
+    color: #0c2461;
+    margin-bottom: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.area {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.area h4 {
+    color: #1e3799;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.area p {
+    color: #666;
+    line-height: 1.6;
 }
 
 .direct-call-cta {
@@ -774,6 +888,14 @@ footer {
 
 .footer-logo p {
     opacity: 0.8;
+}
+
+.footer-address {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .footer-links {
@@ -881,7 +1003,7 @@ footer {
 }
 
 .floating-call-btn:hover {
-    width: 180px;
+    width: 200px;
     border-radius: 30px;
     justify-content: flex-start;
     padding-left: 25px;
@@ -961,6 +1083,10 @@ footer {
     }
     
     .contact-simple {
+        grid-template-columns: 1fr;
+    }
+    
+    .areas-grid {
         grid-template-columns: 1fr;
     }
     
