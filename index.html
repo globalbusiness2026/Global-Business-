@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rajesh Mishra · Global Advisor · Mumbai</title>
-    <!-- SEO meta (visible for bots, minimal impact on design) -->
+    <!-- SEO meta -->
     <meta name="description" content="Rajesh Mishra – Financial / Crypto / Software Advisor. Founder & CEO Global Business | SIGMA SIX. Mumbai based expert.">
     <meta name="keywords" content="Rajesh Mishra, rajesh mumbai, rajesh financial advisor, rajesh sigma six, best mumbai advisor, wealth management, crypto">
-    <!-- hidden keywords hint (styling hides from page but keeps for crawlers) -->
     <style>.seo-hide { display: none; }</style>
     <!-- fonts & icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -159,7 +158,7 @@
             text-align: center;
         }
 
-        /* RIGHT PANEL – buttons & areas (professional & beautiful) */
+        /* RIGHT PANEL – buttons & new chart area (software & finance) */
         .expertise-panel {
             background: #ffffff;
             padding: 2.8rem 2.5rem;
@@ -241,55 +240,209 @@
             transform: translateY(-3px);
         }
 
-        .expertise-blocks {
+        /* ----- NEW PROFESSIONAL CHART SECTION (software & finance) ----- */
+        .insight-section {
             margin-top: 2rem;
+            background: #fafcff;
+            border-radius: 28px;
+            padding: 1.8rem 1.8rem 2rem 1.8rem;
+            border: 1px solid #e6edf8;
+            box-shadow: 0 6px 16px rgba(0,20,40,0.04);
         }
 
-        .grid-3col {
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .insight-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #132c4a;
+            letter-spacing: -0.3px;
+        }
+
+        .insight-header i {
+            font-size: 2rem;
+            color: #2f5e9c;
+            background: #e1ebfa;
+            padding: 0.5rem;
+            border-radius: 16px;
+        }
+
+        .chart-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem 1.5rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem 2rem;
         }
 
-        .area-item {
-            background: #f8fafd;
-            padding: 0.7rem 1rem;
-            border-radius: 14px;
-            font-size: 0.92rem;
-            font-weight: 500;
-            color: #1d3b5c;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        .chart-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.02);
+            border: 1px solid #eef3fb;
+        }
+
+        .chart-title {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            border: 1px solid #e9eef4;
+            font-weight: 600;
+            color: #1d3b5c;
+            margin-bottom: 1rem;
         }
 
-        .area-item i {
-            color: #3f7bcb;
-            font-size: 0.9rem;
-            width: 1.2rem;
+        .chart-title i {
+            color: #3b77b5;
+            font-size: 1.2rem;
         }
 
-        /* micro seo (hidden from view but accessible to bots) */
-        .seo-hide {
-            display: none;
+        /* visual bar chart (soft & professional) */
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 0.8rem 0;
+        }
+
+        .bar-label {
+            width: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #29455e;
+        }
+
+        .bar-bg {
+            flex: 1;
+            height: 8px;
+            background: #e3eaf3;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 8px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #2f6eb0, #5190d0);
+            width: 0%; /* set per inline style */
+        }
+
+        .bar-value {
+            min-width: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #113355;
+        }
+
+        /* pie / doughnut mimic (circle charts) */
+        .metric-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .metric-circle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+        }
+
+        .circle-progress {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, white 4px, transparent 5px),
+                        conic-gradient(#2f6eb0 0% 75%, #e2ecf9 75% 100%);
+            margin-bottom: 0.4rem;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+        }
+
+        .circle-progress.crypto {
+            background: radial-gradient(circle at 30% 30%, white 4px, transparent 5px),
+                        conic-gradient(#2b6c9e 0% 45%, #e2ecf9 45% 100%);
+        }
+
+        .circle-progress.roi {
+            background: radial-gradient(circle at 30% 30%, white 4px, transparent 5px),
+                        conic-gradient(#20578b 0% 92%, #e2ecf9 92% 100%);
+        }
+
+        .metric-circle span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #274e73;
+        }
+
+        .metric-circle .percent {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #103450;
+        }
+
+        .mini-table {
+            margin-top: 1.5rem;
+            background: #f4f9ff;
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .mini-table .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed #cbd9ec;
+        }
+
+        .mini-table .row:last-child {
+            border-bottom: none;
+        }
+
+        .mini-table .label {
+            color: #1d3f62;
+            font-weight: 500;
+        }
+
+        .mini-table .value {
+            font-weight: 700;
+            color: #103450;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            background: #ecf3fd;
+            border-radius: 40px;
+            padding: 0.8rem 1.8rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .footer-note i {
+            color: #1d4d7a;
         }
 
         /* responsive */
         @media (max-width: 950px) {
             .card-inner { grid-template-columns: 1fr; }
             .profile-panel { border-radius: 0; }
+            .chart-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
             .working-grid { grid-template-columns: 1fr; }
-            .grid-3col { grid-template-columns: repeat(2, 1fr); }
             .button-group { flex-direction: column; }
             .btn { width: 100%; }
+            .metric-row { flex-direction: column; align-items: center; gap: 1rem;}
+            .metric-circle { width: auto; }
         }
 
-        /* extra polish */
         .quote-note {
             margin-top: 2rem;
             font-size: 0.9rem;
@@ -306,6 +459,7 @@
             font-weight: 500;
             font-size: 0.9rem;
         }
+        .seo-hide { display: none; }
     </style>
 </head>
 <body>
@@ -314,7 +468,7 @@
             <!-- LEFT: Rajesh profile with oval DP -->
             <div class="profile-panel">
                 <div class="oval-frame">
-                    <!-- raj_dp.png image as described (oval design) -->
+                    <!-- raj_dp.jpg as provided (use same filename) -->
                     <img src="raj_dp.jpg" alt="Rajesh Mishra oval profile photo">
                 </div>
 
@@ -338,7 +492,7 @@
                     <i class="fas fa-bullseye" style="margin-right: 8px;"></i> SPECIALIZED WORKING AREA
                 </div>
 
-                <!-- beautiful grid of working areas (left side) -->
+                <!-- left side grid (specialized areas) unchanged -->
                 <div class="working-grid">
                     <div class="working-item"><i class="fas fa-chart-pie"></i> Financial Planning</div>
                     <div class="working-item"><i class="fas fa-coins"></i> Wealth Management</div>
@@ -367,85 +521,125 @@
                 </div>
             </div>
 
-            <!-- RIGHT PANEL: Buttons & secondary area lists -->
+            <!-- RIGHT PANEL: updated button + new finance/software chart (no old list) -->
             <div class="expertise-panel">
                 <div class="panel-label">YOUR TRUSTED ADVISOR</div>
                 <div class="main-heading">
                     Financial · Crypto · Software <br><span>Global Digital Asset expert</span>
                 </div>
 
-                <!-- TWO BEAUTIFUL BUTTONS (Rajesh page & software page) -->
+                <!-- BUTTON updated: renamed to "Financial Consultancy" with finance.html link -->
                 <div class="button-group">
-                    <a href="rajesh.html" class="btn btn-primary">
-                        <i class="fas fa-user-tie"></i> Rajesh Mishra Profile
+                    <a href="finance.html" class="btn btn-primary">
+                        <i class="fas fa-hand-holding-usd"></i> Financial Consultancy
                     </a>
                     <a href="software.html" class="btn btn-secondary">
                         <i class="fas fa-laptop-code"></i> Software Solutions
                     </a>
                 </div>
 
-                <!-- remaining specializations (right side) shown as compact chips, but also we show complete list in a 3-col grid for elegance -->
-                <div class="expertise-blocks">
-                    <p style="font-weight: 600; color: #102b47; margin-bottom: 1.2rem; font-size: 1.2rem;">
-                        <i class="fas fa-microchip" style="color: #2f5e9c;"></i> Complete advisory domains
-                    </p>
-                    <div class="grid-3col">
-                        <!-- all 20 items from brief + extras for consistency (displayed again for right side – but we cover all) -->
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Financial Planning</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Wealth Management</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Investment Advisory</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Portfolio Management</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Asset Allocation</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Risk Assessment</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Tax Planning</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Retirement Planning</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Insurance Advisory</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Estate Planning</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Capital Gains</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Cash Flow Management</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Net Worth Analysis</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Business Valuation</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Corporate Finance</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Financial Modeling</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Debt Management</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Compliance</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>Due Diligence</div>
-                        <div class="area-item"><i class="fas fa-check-circle"></i>ROI</div>
-                        <!-- add extra if needed, we've covered exactly 20 -->
+                <!-- NEW BEAUTIFUL CHART SECTION (software + finance metrics) replaces old advisory domains -->
+                <div class="insight-section">
+                    <div class="insight-header">
+                        <i class="fas fa-chart-simple"></i>
+                        <h3>Software & Finance insights</h3>
+                    </div>
+
+                    <div class="chart-grid">
+                        <!-- left chart card: software adoption / ROI bars -->
+                        <div class="chart-card">
+                            <div class="chart-title">
+                                <i class="fas fa-chart-bar"></i> <span>Software performance metrics</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">MLM platform</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 92%"></div></div>
+                                <span class="bar-value">92%</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">Crypto analytics</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 78%"></div></div>
+                                <span class="bar-value">78%</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">Risk modeling</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 88%"></div></div>
+                                <span class="bar-value">88%</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">Portfolio tracker</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 95%"></div></div>
+                                <span class="bar-value">95%</span>
+                            </div>
+
+                            <!-- mini software KPI table -->
+                            <div class="mini-table" style="margin-top:1.2rem;">
+                                <div class="row"><span class="label">Active users (software)</span><span class="value">14.2k</span></div>
+                                <div class="row"><span class="label">Avg. ROI (fintech)</span><span class="value">+18.6%</span></div>
+                                <div class="row"><span class="label">Deployment speed</span><span class="value">2.4 days</span></div>
+                            </div>
+                        </div>
+
+                        <!-- right chart card: financial & crypto allocation / circular charts -->
+                        <div class="chart-card">
+                            <div class="chart-title">
+                                <i class="fas fa-chart-pie"></i> <span>Asset & allocation overview</span>
+                            </div>
+                            <div class="metric-row">
+                                <div class="metric-circle">
+                                    <div class="circle-progress"></div>
+                                    <span class="percent">75%</span>
+                                    <span>Equity</span>
+                                </div>
+                                <div class="metric-circle">
+                                    <div class="circle-progress crypto"></div>
+                                    <span class="percent">45%</span>
+                                    <span>Crypto</span>
+                                </div>
+                                <div class="metric-circle">
+                                    <div class="circle-progress roi"></div>
+                                    <span class="percent">92%</span>
+                                    <span>ROI index</span>
+                                </div>
+                            </div>
+
+                            <!-- additional finance data table -->
+                            <div class="mini-table" style="margin-top:1.8rem;">
+                                <div class="row"><span class="label">Wealth AUM</span><span class="value">₹246Cr</span></div>
+                                <div class="row"><span class="label">Tax efficiency</span><span class="value">optimized</span></div>
+                                <div class="row"><span class="label">Digital asset ratio</span><span class="value">34%</span></div>
+                                <div class="row"><span class="label">Insurance coverage</span><span class="value">₹120Cr</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- small note: software & finance synergy -->
+                    <div style="margin-top: 1.5rem; background: #ecf5ff; padding: 0.6rem 1.2rem; border-radius: 60px; font-size:0.9rem; display:inline-block;">
+                        <i class="fas fa-bolt" style="color:#1e4e7a;"></i> Fintech integration · real-time analytics · secure advisory
                     </div>
                 </div>
 
-                <!-- subtle contact / location hint (Rajesh Mumbai) -->
-                <div style="margin-top: 2.4rem; background: #f1f6fe; border-radius: 60px; padding: 1rem 1.8rem; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
-                    <i class="fas fa-map-marker-alt" style="color: #2b5797; font-size: 1.4rem;"></i>
-                    <span style="font-weight: 500;">Mumbai | Global Digital Asset · <i class="far fa-clock"></i> 25+ years experience</span>
-                    <span style="margin-left: auto; background: #fff; padding: 0.3rem 1.2rem; border-radius: 40px; font-size: 0.9rem; box-shadow: 0 2px 6px rgba(0,0,0,0.03);"><i class="fas fa-calendar-alt"></i> SIGMA SIX</span>
+                <!-- footer location (Mumbai) kept -->
+                <div class="footer-note">
+                    <i class="fas fa-map-marker-alt" style="font-size: 1.2rem;"></i>
+                    <span style="font-weight: 500;">Mumbai · Global Digital Asset · 25+ years experience</span>
+                    <span style="margin-left: auto; background: #fff; padding: 0.3rem 1.2rem; border-radius: 40px;"><i class="fas fa-calendar-alt"></i> SIGMA SIX</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SEO keywords (hidden) – Rajesh Mishra, rajesh mumbai, rajesh financial advisor, rajesh sigma six, raj, best mumbai advisor etc. -->
+    <!-- hidden SEO keywords -->
     <div class="seo-hide">
-        <!-- These keywords are hidden from visual but accessible to search engines -->
-        <span>Rajesh Mishra</span>
-        <span>rajesh mumbai</span>
-        <span>rajesh financial advisor</span>
-        <span>rajesh sigma six</span>
-        <span>raj</span>
-        <span>best mumbai advisor</span>
-        <span>Global Business CEO</span>
-        <span>crypto consultant mumbai</span>
-        <span>software advisor india</span>
+        <span>Rajesh Mishra</span> <span>rajesh mumbai</span> <span>rajesh financial advisor</span>
+        <span>rajesh sigma six</span> <span>raj</span> <span>best mumbai advisor</span>
+        <span>Global Business CEO</span> <span>crypto consultant mumbai</span>
     </div>
 
-    <!-- small JS to update year or any interactivity (optional) but we keep minimal -->
     <script>
         (function() {
-            // minor: keep current year hidden? but not needed – we keep simple
-            console.log('Rajesh Mishra profile – page ready');
+            console.log('Rajesh Mishra profile with financial/software charts');
         })();
     </script>
-    <!-- note: raj_dp.png image must exist in same folder; if not, placeholder icon can be used? but we rely on provided file. -->
 </body>
 </html>
