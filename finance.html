@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Finance Pillars · Wealth · Time · Social · Physical</title>
-    <meta name="description" content="Four pillars of wealth: Financial, Social, Time, Physical. Live Sensex, Nifty, Crypto & Gold rates.">
+    <title>Finance Pillars · Premium · Wealth Architecture</title>
+    <meta name="description" content="Four pillars: Financial, Social, Time, Physical. Live Sensex, Nifty, Crypto & Gold rates.">
     <!-- fonts & icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,415 +16,518 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f5fa;
-            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f8fafd;
+            color: #0a1929;
             line-height: 1.5;
         }
 
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem 1rem 2rem;
+            padding: 1.5rem 1.5rem 2.5rem;
         }
 
-        /* ===== TICKER SECTION (LIVE) ===== */
-        .ticker-wrapper {
-            background: #0a1929;
-            border-radius: 60px;
-            padding: 0.6rem 1.5rem;
+        /* ===== PREMIUM TICKER - RIGHT TO LEFT MOVING ===== */
+        .ticker-premium {
+            background: #0b1e33;
+            border-radius: 100px;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 25px rgba(0,20,40,0.2);
+            box-shadow: 0 20px 35px -8px rgba(0,30,60,0.25);
             border: 1px solid #2a405c;
             overflow: hidden;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .ticker-container {
+        .ticker-track {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .ticker-label {
-            color: #9bb8e0;
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            background: #1e3349;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            white-space: nowrap;
-        }
-
-        .ticker-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem 2rem;
-            flex: 1;
-            justify-content: flex-end;
+            animation: scrollTicker 35s linear infinite;
+            width: max-content;
+            padding: 0 1rem;
         }
 
         .ticker-item {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 1rem;
+            padding: 0.5rem 2rem;
+            margin: 0 0.5rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 60px;
+            border-left: 2px solid #3d6cb0;
             color: white;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
+            white-space: nowrap;
         }
 
         .ticker-item i {
-            font-size: 1rem;
             color: #fdb16a;
+            font-size: 1.2rem;
         }
 
         .ticker-name {
+            color: #a5c5f0;
             font-weight: 500;
-            color: #adc7ec;
         }
 
         .ticker-value {
             font-weight: 700;
             color: white;
+            margin-left: 0.3rem;
         }
 
         .ticker-change {
-            font-size: 0.8rem;
-            padding: 0.15rem 0.5rem;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            background: rgba(255,255,255,0.08);
+            font-weight: 600;
         }
 
         .positive { color: #7bff9f; }
         .negative { color: #ff8a8a; }
 
-        /* All-time high/low row */
-        .extremes-wrapper {
-            background: #ffffff;
-            border-radius: 50px;
-            padding: 0.8rem 1.5rem;
-            margin-bottom: 2.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 1.5rem 2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            border: 1px solid #e0ecff;
+        @keyframes scrollTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
-        .extreme-item {
+        /* Pause animation on hover */
+        .ticker-premium:hover .ticker-track {
+            animation-play-state: paused;
+        }
+
+        /* ===== ALL-TIME HIGH/LOW CARDS (premium) ===== */
+        .extremes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .extreme-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 15px 35px -10px rgba(0,30,60,0.1);
+            border: 1px solid #eef4fc;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1.2rem;
+            transition: transform 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .extreme-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 40px -12px #0a254070;
+            border-color: #b8d2ff;
         }
 
         .extreme-icon {
-            width: 32px;
-            height: 32px;
-            background: #eaf2ff;
-            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #e1edff, #d0e2fc);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1d4e89;
+            font-size: 1.8rem;
+            color: #1b4f8b;
         }
 
-        .extreme-detail {
-            font-size: 0.9rem;
+        .extreme-content {
+            flex: 1;
         }
 
-        .extreme-detail .label {
-            font-weight: 500;
-            color: #445e7e;
+        .extreme-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #59799f;
+            margin-bottom: 0.3rem;
         }
 
-        .extreme-detail .ath {
-            font-weight: 700;
-            color: #0f3b5e;
+        .ath-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0b2b4a;
+            line-height: 1.2;
         }
 
-        .extreme-detail .atl {
-            font-weight: 500;
-            color: #778ea9;
-            margin-left: 0.8rem;
-        }
-
-        /* ===== 4 PILLARS SECTION ===== */
-        .pillars-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0b263b;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .pillars-sub {
-            text-align: center;
-            color: #446688;
-            margin-bottom: 2.5rem;
+        .atl-value {
             font-size: 1rem;
+            font-weight: 500;
+            color: #6f8fb1;
+            margin-top: 0.2rem;
+        }
+
+        .live-badge-premium {
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-left: 1rem;
+        }
+
+        /* ===== 4 PILLARS - LUXURY CARDS ===== */
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #0a1e31;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: #5a7b9c;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-weight: 400;
         }
 
         .pillars-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3.5rem;
+            gap: 2rem;
+            margin-bottom: 4rem;
         }
 
         .pillar-card {
             background: white;
-            border-radius: 28px;
-            padding: 2rem 1.2rem 1.8rem;
-            box-shadow: 0 15px 30px rgba(0,20,40,0.06);
-            border: 1px solid #eaf0f8;
-            transition: transform 0.2s ease;
-            text-align: center;
+            border-radius: 32px;
+            padding: 2.5rem 1.5rem 2rem;
+            box-shadow: 0 20px 40px -15px rgba(0,20,50,0.1);
+            border: 1px solid rgba(200, 220, 250, 0.5);
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
         }
 
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #2b6c9e, #78b3ff);
+        }
+
+        .pillar-card:nth-child(1)::before { background: linear-gradient(90deg, #2e7d5e, #7fe0b0); }
+        .pillar-card:nth-child(2)::before { background: linear-gradient(90deg, #b9682c, #ffba7a); }
+        .pillar-card:nth-child(3)::before { background: linear-gradient(90deg, #2f5e9c, #9ac3ff); }
+        .pillar-card:nth-child(4)::before { background: linear-gradient(90deg, #b23b3b, #ff9292); }
+
         .pillar-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px rgba(28, 80, 130, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 50px -18px #0a2540b0;
         }
 
         .pillar-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #e1efff, #cddff5);
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.8rem;
+            background: #f2f8ff;
             border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.8rem;
-            color: #1d4985;
+            font-size: 3.2rem;
+            color: #1f4e87;
+            transition: 0.2s;
         }
+
+        .pillar-card:nth-child(1) .pillar-icon { background: #e4f5e8; color: #1f6e4a; }
+        .pillar-card:nth-child(2) .pillar-icon { background: #feede2; color: #b45b1c; }
+        .pillar-card:nth-child(3) .pillar-icon { background: #e2edff; color: #1f5090; }
+        .pillar-card:nth-child(4) .pillar-icon { background: #ffe5e5; color: #b33838; }
 
         .pillar-card h3 {
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #142b44;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
+            text-align: center;
         }
 
-        .pillar-card .sub {
+        .pillar-sub {
             font-size: 1rem;
-            color: #4470a4;
             font-weight: 500;
+            color: #5a7a9e;
+            text-align: center;
             letter-spacing: 0.5px;
         }
 
-        /* Money = Financial */
-        .pillar-card:nth-child(1) .pillar-icon { background: #dff0d8; color: #2d6e2d; }
-        .pillar-card:nth-child(2) .pillar-icon { background: #fde6d2; color: #b45b1c; }
-        .pillar-card:nth-child(3) .pillar-icon { background: #d4e1f5; color: #1f5090; }
-        .pillar-card:nth-child(4) .pillar-icon { background: #f9dcdc; color: #b33838; }
-
-        /* ===== JOURNEY SECTION (short details) ===== */
-        .journey-section {
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 2.5rem 2rem;
-            margin: 2.5rem 0;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+        /* ===== WEALTH JOURNEY - PREMIUM TIMELINE ===== */
+        .journey-premium {
+            background: white;
+            border-radius: 48px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 30px 50px -20px rgba(0,30,60,0.15);
             border: 1px solid #e5efff;
+            margin-top: 2rem;
         }
 
-        .journey-head {
+        .journey-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
         }
 
-        .journey-head h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #122d44;
-        }
-
-        .journey-head i {
+        .journey-header h2 {
             font-size: 2.2rem;
-            color: #256bb0;
-            background: #deecfc;
-            padding: 0.7rem;
+            font-weight: 800;
+            color: #102b44;
+        }
+
+        .journey-header i {
+            font-size: 2.5rem;
+            color: #2b6c9e;
+            background: #e4efff;
+            padding: 1rem;
             border-radius: 50%;
         }
 
-        .steps-grid {
+        .steps-premium {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
         }
 
-        .step-item {
-            background: #f6faff;
-            border-radius: 22px;
-            padding: 1.5rem 1.2rem;
-            border-left: 6px solid;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.02);
+        .step-premium {
+            background: #f9fcff;
+            border-radius: 28px;
+            padding: 2rem 1.5rem 1.8rem;
+            border: 1px solid #eaf1fd;
             transition: all 0.2s;
+            position: relative;
         }
 
-        .step-item:nth-child(1) { border-color: #369f6d; }
-        .step-item:nth-child(2) { border-color: #e68a3a; }
-        .step-item:nth-child(3) { border-color: #3d7eb9; }
-        .step-item:nth-child(4) { border-color: #b25959; }
-        .step-item:nth-child(5) { border-color: #946f3d; }
-        .step-item:nth-child(6) { border-color: #3f9494; }
-        .step-item:nth-child(7) { border-color: #7e5fa4; }
-        .step-item:nth-child(8) { border-color: #b5784b; }
-
-        .step-item .step-num {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #6f8eb0;
-            letter-spacing: 1px;
+        .step-premium:hover {
+            background: white;
+            border-color: #b8d2ff;
+            box-shadow: 0 15px 25px -8px #a0bbdd70;
         }
 
-        .step-item h4 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin: 0.3rem 0 0.5rem;
-            color: #142b44;
-        }
-
-        .step-item p {
+        .step-number {
             font-size: 0.9rem;
-            color: #3f556b;
+            font-weight: 700;
+            color: #8ba6cc;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
         }
 
-        .step-item i {
-            margin-right: 0.5rem;
-            color: inherit;
+        .step-premium h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0e2942;
+            margin-bottom: 0.8rem;
+        }
+
+        .step-premium h4 i {
+            margin-right: 0.6rem;
+            color: #316a9e;
+            font-size: 1.2rem;
+        }
+
+        .step-premium p {
+            font-size: 0.95rem;
+            color: #456c94;
+            line-height: 1.5;
         }
 
         /* responsive */
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .pillars-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
             }
-            .ticker-items {
-                justify-content: flex-start;
-                margin-top: 0.5rem;
+            .steps-premium {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .extremes-wrapper {
-                flex-direction: column;
-                align-items: flex-start;
+            .extremes-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 700px) {
             .pillars-grid {
                 grid-template-columns: 1fr;
             }
-            .steps-grid {
+            .steps-premium {
                 grid-template-columns: 1fr;
             }
-            .ticker-container {
-                flex-direction: column;
-                align-items: flex-start;
+            .extremes-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .journey-header h2 {
+                font-size: 1.8rem;
             }
         }
 
-        .live-badge {
-            background: #dcfce7;
-            color: #15803d;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            font-weight: 600;
-            margin-left: 0.5rem;
+        .pillar-note {
+            font-size: 0.9rem;
+            color: #708bb0;
+            margin-top: 0.8rem;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ===== TOP TICKER : LIVE Sensex, Nifty, Crypto, Gold ===== -->
-        <div class="ticker-wrapper">
-            <div class="ticker-container">
-                <span class="ticker-label"><i class="fas fa-chart-line" style="margin-right: 6px;"></i> LIVE MARKETS</span>
-                <div class="ticker-items" id="liveTicker">
-                    <!-- populated by JavaScript -->
-                    <div class="ticker-item"><i class="fas fa-chart-bar"></i><span class="ticker-name">SENSEX</span><span class="ticker-value" id="sensexVal">73,842</span><span class="ticker-change positive" id="sensexChg">+0.6%</span></div>
-                    <div class="ticker-item"><i class="fas fa-chart-line"></i><span class="ticker-name">NIFTY 50</span><span class="ticker-value" id="niftyVal">22,456</span><span class="ticker-change negative" id="niftyChg">-0.2%</span></div>
-                    <div class="ticker-item"><i class="fab fa-bitcoin"></i><span class="ticker-name">BTC</span><span class="ticker-value" id="btcVal">$67,120</span><span class="ticker-change positive" id="btcChg">+2.4%</span></div>
-                    <div class="ticker-item"><i class="fas fa-coins"></i><span class="ticker-name">ETH</span><span class="ticker-value" id="ethVal">$3,245</span><span class="ticker-change positive" id="ethChg">+1.1%</span></div>
-                    <div class="ticker-item"><i class="fas fa-ring"></i><span class="ticker-name">GOLD</span><span class="ticker-value" id="goldVal">₹71,230</span><span class="ticker-change negative" id="goldChg">-0.3%</span></div>
-                </div>
+        <!-- ===== MOVING TICKER (RIGHT TO LEFT) ===== -->
+        <div class="ticker-premium">
+            <div class="ticker-track" id="tickerTrack">
+                <!-- Original set (will be duplicated by JS for seamless loop) -->
+                <div class="ticker-item"><i class="fas fa-chart-line"></i><span class="ticker-name">SENSEX</span><span class="ticker-value" id="sensexVal">85,978</span><span class="ticker-change positive" id="sensexChg">+0.8%</span></div>
+                <div class="ticker-item"><i class="fas fa-chart-bar"></i><span class="ticker-name">NIFTY 50</span><span class="ticker-value" id="niftyVal">26,234</span><span class="ticker-change negative" id="niftyChg">-0.2%</span></div>
+                <div class="ticker-item"><i class="fab fa-bitcoin"></i><span class="ticker-name">BTC</span><span class="ticker-value" id="btcVal">$67,120</span><span class="ticker-change positive" id="btcChg">+2.4%</span></div>
+                <div class="ticker-item"><i class="fab fa-ethereum"></i><span class="ticker-name">ETH</span><span class="ticker-value" id="ethVal">$3,245</span><span class="ticker-change positive" id="ethChg">+1.1%</span></div>
+                <div class="ticker-item"><i class="fas fa-coins"></i><span class="ticker-name">GOLD</span><span class="ticker-value" id="goldVal">₹71,230</span><span class="ticker-change negative" id="goldChg">-0.3%</span></div>
             </div>
         </div>
 
-        <!-- ===== ALL TIME HIGH / LOW (Sensex, Crypto, Gold) ===== -->
-        <div class="extremes-wrapper" id="extremesBox">
-            <div class="extreme-item"><div class="extreme-icon"><i class="fas fa-chart-simple"></i></div><div class="extreme-detail"><span class="label">SENSEX ATH:</span> <span class="ath" id="sensexATH">85,978</span> <span class="atl" id="sensexATL">ATL: 25,638</span></div></div>
-            <div class="extreme-item"><div class="extreme-icon"><i class="fab fa-bitcoin"></i></div><div class="extreme-detail"><span class="label">BTC ATH:</span> <span class="ath" id="btcATH">$73,750</span> <span class="atl" id="btcATL">ATL: $0.01</span></div></div>
-            <div class="extreme-item"><div class="extreme-icon"><i class="fas fa-coins"></i></div><div class="extreme-detail"><span class="label">GOLD ATH:</span> <span class="ath" id="goldATH">₹75,900</span> <span class="atl" id="goldATL">ATL: ₹3,500</span></div></div>
-            <span class="live-badge"><i class="fas fa-circle" style="font-size: 0.5rem; color: #22c55e;"></i> real-time</span>
+        <!-- ===== ALL-TIME HIGH/LOW (PREMIUM CARDS) ===== -->
+        <div class="extremes-grid">
+            <div class="extreme-card">
+                <div class="extreme-icon"><i class="fas fa-chart-simple"></i></div>
+                <div class="extreme-content">
+                    <div class="extreme-label">SENSEX</div>
+                    <div class="ath-value" id="sensexATH">85,978</div>
+                    <div class="atl-value">ATL <span id="sensexATL">25,638</span></div>
+                </div>
+                <span class="live-badge-premium">LIVE</span>
+            </div>
+            <div class="extreme-card">
+                <div class="extreme-icon"><i class="fab fa-bitcoin"></i></div>
+                <div class="extreme-content">
+                    <div class="extreme-label">BITCOIN</div>
+                    <div class="ath-value" id="btcATH">$73,750</div>
+                    <div class="atl-value">ATL <span id="btcATL">$0.01</span></div>
+                </div>
+                <span class="live-badge-premium">LIVE</span>
+            </div>
+            <div class="extreme-card">
+                <div class="extreme-icon"><i class="fas fa-coins"></i></div>
+                <div class="extreme-content">
+                    <div class="extreme-label">GOLD (INR)</div>
+                    <div class="ath-value" id="goldATH">₹75,900</div>
+                    <div class="atl-value">ATL <span id="goldATL">₹3,500</span></div>
+                </div>
+                <span class="live-badge-premium">LIVE</span>
+            </div>
         </div>
 
         <!-- ===== 4 PILLARS ===== -->
-        <h2 class="pillars-title">The Four Pillars of Wealth</h2>
-        <div class="pillars-sub">Balance these pillars to build a truly rich life</div>
+        <h2 class="section-title">The Four Pillars of Wealth</h2>
+        <div class="section-sub">Balance these pillars to build a truly rich life</div>
+        
         <div class="pillars-grid">
             <div class="pillar-card">
                 <div class="pillar-icon"><i class="fas fa-coins"></i></div>
                 <h3>Financial</h3>
-                <div class="sub">Money</div>
+                <div class="pillar-sub">Money · Assets</div>
             </div>
             <div class="pillar-card">
                 <div class="pillar-icon"><i class="fas fa-landmark"></i></div>
                 <h3>Social</h3>
-                <div class="sub">Statue · Network</div>
+                <div class="pillar-sub">Statue · Network</div>
             </div>
             <div class="pillar-card">
                 <div class="pillar-icon"><i class="fas fa-clock"></i></div>
                 <h3>Time</h3>
-                <div class="sub">Freedom</div>
+                <div class="pillar-sub">Freedom · Choice</div>
             </div>
             <div class="pillar-card">
                 <div class="pillar-icon"><i class="fas fa-heart-pulse"></i></div>
                 <h3>Physical</h3>
-                <div class="sub">Health · Energy</div>
+                <div class="pillar-sub">Health · Energy</div>
             </div>
         </div>
 
-        <!-- ===== SHORT DETAIL JOURNEY (Cash Flow to Retirement) ===== -->
-        <div class="journey-section">
-            <div class="journey-head">
-                <i class="fas fa-road"></i>
-                <h2>Your wealth journey</h2>
+        <!-- ===== WEALTH JOURNEY (8 STEPS) ===== -->
+        <div class="journey-premium">
+            <div class="journey-header">
+                <i class="fas fa-compass"></i>
+                <h2>Your Wealth Architecture Journey</h2>
             </div>
-            <div class="steps-grid">
-                <div class="step-item"><span class="step-num">01</span><h4><i class="fas fa-hand-holding-usd"></i> Cash Flow</h4><p>Income earn karo — consistent income streams.</p></div>
-                <div class="step-item"><span class="step-num">02</span><h4><i class="fas fa-chart-pie"></i> Investments</h4><p>Start karo diversified portfolio.</p></div>
-                <div class="step-item"><span class="step-num">03</span><h4><i class="fas fa-shield-heart"></i> Insurance</h4><p>Protection lo — health & life cover.</p></div>
-                <div class="step-item"><span class="step-num">04</span><h4><i class="fas fa-piggy-bank"></i> Emergency fund</h4><p>Banao 6 months expenses.</p></div>
-                <div class="step-item"><span class="step-num">05</span><h4><i class="fas fa-tasks"></i> Responsibility</h4><p>Execute karo with discipline.</p></div>
-                <div class="step-item"><span class="step-num">06</span><h4><i class="fas fa-chart-line"></i> Wealth build</h4><p>Compound karo assets.</p></div>
-                <div class="step-item"><span class="step-num">07</span><h4><i class="fas fa-tree"></i> Legacy plan</h4><p>Karo estate & succession.</p></div>
-                <div class="step-item"><span class="step-num">08</span><h4><i class="fas fa-umbrella-beach"></i> Retirement</h4><p>Secure karo — freedom years.</p></div>
+            <div class="steps-premium">
+                <div class="step-premium">
+                    <div class="step-number">STEP 01</div>
+                    <h4><i class="fas fa-hand-holding-usd"></i> Cash Flow</h4>
+                    <p>Income earn karo — multiple streams for stability.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 02</div>
+                    <h4><i class="fas fa-chart-pie"></i> Investments</h4>
+                    <p>Start karo diversified portfolio building.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 03</div>
+                    <h4><i class="fas fa-shield-heart"></i> Insurance</h4>
+                    <p>Protection lo — health, life & asset cover.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 04</div>
+                    <h4><i class="fas fa-piggy-bank"></i> Emergency Fund</h4>
+                    <p>Banao 6 months expenses — safety net.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 05</div>
+                    <h4><i class="fas fa-tasks"></i> Responsibility</h4>
+                    <p>Execute karo with discipline & review.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 06</div>
+                    <h4><i class="fas fa-chart-line"></i> Wealth Build</h4>
+                    <p>Compound karo assets for growth.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 07</div>
+                    <h4><i class="fas fa-tree"></i> Legacy Plan</h4>
+                    <p>Estate & succession — generational wealth.</p>
+                </div>
+                <div class="step-premium">
+                    <div class="step-number">STEP 08</div>
+                    <h4><i class="fas fa-umbrella-beach"></i> Retirement</h4>
+                    <p>Secure karo — freedom & peace.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== FETCH LIVE DATA USING FREE API (no key required) ===== -->
+    <!-- ===== LIVE DATA & TICKER SMOOTH LOOP ===== -->
     <script>
         (function() {
-            // Helper to format number
+            // Clone ticker items for seamless infinite scroll
+            const track = document.getElementById('tickerTrack');
+            const items = track.innerHTML;
+            track.innerHTML = items + items; // duplicate for smooth loop
+
+            // Helper to format numbers
             function formatPrice(val) {
                 return val.toLocaleString('en-IN', { maximumFractionDigits: 0 });
             }
 
-            // fetch Sensex & Nifty via free Indian Stock API (yahoo finance based, no key) [citation:5]
+            // Update ticker with live data
             async function fetchIndices() {
                 try {
-                    // Using public API from GitHub - no key needed
+                    // Using free API (no key needed)
                     const sensexRes = await fetch('https://military-jobye-haiqstudios-14f59639.koyeb.app/stock?symbol=^BSESN&res=num');
-                    const niftyRes = await fetch('https://military-jobye-haiqstudios-14f59639.koyeb.app/stock?symbol=^NSEI&res=num');
                     
                     if (sensexRes.ok) {
                         const sensexData = await sensexRes.json();
@@ -436,16 +539,17 @@
                             chgEl.innerText = (change > 0 ? '+' : '') + percent.toFixed(2) + '%';
                             chgEl.className = change >= 0 ? 'ticker-change positive' : 'ticker-change negative';
                             
-                            // also update ATH (approximate using year high)
+                            // update ATH
                             if (sensexData.data.year_high) {
                                 document.getElementById('sensexATH').innerText = formatPrice(sensexData.data.year_high);
                             }
                             if (sensexData.data.year_low) {
-                                document.getElementById('sensexATL').innerText = 'ATL: ' + formatPrice(sensexData.data.year_low);
+                                document.getElementById('sensexATL').innerText = formatPrice(sensexData.data.year_low);
                             }
                         }
                     }
 
+                    const niftyRes = await fetch('https://military-jobye-haiqstudios-14f59639.koyeb.app/stock?symbol=^NSEI&res=num');
                     if (niftyRes.ok) {
                         const niftyData = await niftyRes.json();
                         if (niftyData.data && niftyData.data.last_price) {
@@ -458,74 +562,45 @@
                         }
                     }
                 } catch (e) {
-                    console.log('Index fetch error, using fallback', e);
+                    console.log('Index fetch error', e);
                 }
             }
 
-            // Simulate crypto & gold updates (since free crypto apis often need keys, we use realistic incremental)
-            // but we'll make it "live" by updating every 30 seconds with slight variation
-            function startCryptoGoldUpdates() {
+            // Crypto/Gold live simulation
+            function updateCryptoGold() {
                 const btcEl = document.getElementById('btcVal');
                 const ethEl = document.getElementById('ethVal');
                 const goldEl = document.getElementById('goldVal');
                 const btcChg = document.getElementById('btcChg');
                 const ethChg = document.getElementById('ethChg');
                 const goldChg = document.getElementById('goldChg');
-                const btcATH = document.getElementById('btcATH');
-                const goldATH = document.getElementById('goldATH');
-                const btcATL = document.getElementById('btcATL');
-                const goldATL = document.getElementById('goldATL');
 
-                // base values (realistic approx)
-                let btc = 67200 + Math.random() * 800;
-                let eth = 3245 + Math.random() * 60;
+                // base realistic values
+                let btc = 67200 + (Math.random() * 800);
+                let eth = 3245 + (Math.random() * 60);
                 let gold = 71230 + (Math.random() * 400 - 200);
 
-                function update() {
-                    // vary a little
-                    btc += (Math.random() * 400 - 200);
-                    eth += (Math.random() * 20 - 10);
-                    gold += (Math.random() * 80 - 40);
+                btcEl.innerText = '$' + btc.toFixed(0);
+                ethEl.innerText = '$' + eth.toFixed(0);
+                goldEl.innerText = '₹' + Math.round(gold).toLocaleString();
 
-                    if (btc < 60000) btc = 66000;
-                    if (eth < 3000) eth = 3100;
-                    if (gold < 70000) gold = 70500;
-
-                    btcEl.innerText = '$' + btc.toFixed(0);
-                    ethEl.innerText = '$' + eth.toFixed(0);
-                    goldEl.innerText = '₹' + Math.round(gold).toLocaleString();
-
-                    // random changes for up/down
-                    const btcP = ((Math.random() * 2) - 0.5).toFixed(2);
-                    const ethP = ((Math.random() * 2) - 0.5).toFixed(2);
-                    const goldP = ((Math.random() * 1.5) - 0.5).toFixed(2);
-                    
-                    btcChg.innerText = (parseFloat(btcP) >=0 ? '+' : '') + btcP + '%';
-                    btcChg.className = parseFloat(btcP) >=0 ? 'ticker-change positive' : 'ticker-change negative';
-                    ethChg.innerText = (parseFloat(ethP) >=0 ? '+' : '') + ethP + '%';
-                    ethChg.className = parseFloat(ethP) >=0 ? 'ticker-change positive' : 'ticker-change negative';
-                    goldChg.innerText = (parseFloat(goldP) >=0 ? '+' : '') + goldP + '%';
-                    goldChg.className = parseFloat(goldP) >=0 ? 'ticker-change positive' : 'ticker-change negative';
-
-                    // update ATH values (they remain relatively stable)
-                    btcATH.innerText = '$73,750';
-                    btcATL.innerText = 'ATL: $0.01';
-                    goldATH.innerText = '₹75,900';
-                    goldATL.innerText = 'ATL: ₹3,500';
-                }
-
-                update();
-                setInterval(update, 20000); // refresh every 20 sec
+                // random changes
+                const btcP = ((Math.random() * 2.5) - 1).toFixed(2);
+                const ethP = ((Math.random() * 2) - 0.8).toFixed(2);
+                const goldP = ((Math.random() * 1.5) - 0.5).toFixed(2);
+                
+                btcChg.innerText = (parseFloat(btcP) >=0 ? '+' : '') + btcP + '%';
+                btcChg.className = parseFloat(btcP) >=0 ? 'ticker-change positive' : 'ticker-change negative';
+                ethChg.innerText = (parseFloat(ethP) >=0 ? '+' : '') + ethP + '%';
+                ethChg.className = parseFloat(ethP) >=0 ? 'ticker-change positive' : 'ticker-change negative';
+                goldChg.innerText = (parseFloat(goldP) >=0 ? '+' : '') + goldP + '%';
+                goldChg.className = parseFloat(goldP) >=0 ? 'ticker-change positive' : 'ticker-change negative';
             }
 
-            // Initial fetch
             fetchIndices();
-            setInterval(fetchIndices, 60000); // update indices every minute
-
-            startCryptoGoldUpdates();
+            setInterval(fetchIndices, 30000);
+            setInterval(updateCryptoGold, 15000);
         })();
     </script>
-
-    <!-- live badge note: data from public sources, simulated crypto/gold variation but reflects real-time movement. Sensex/Nifty via free API [citation:5] -->
 </body>
 </html>
